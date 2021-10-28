@@ -2,9 +2,16 @@
 
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.min.js" integrity="sha256-hEmjt7z3bB53X/awJyV81gmBLpVw2mj7EsvoJelZWow=" crossorigin="anonymous"></script>
 {{ $pdf_file := .Get "file" }}
-{{ $pdf_id := replaceRE "[.-]" "_" $pdf_file }}
-{{ $pdf_url :=  path.Join .Page.Dir $pdf_file }}
-{{ $pdf_url := $pdf_url | absURL }}
+{{ $pdf_id := "" }}
+{{ $pdf_url := "" }}
+{{ if findRE "^http" $pdf_file }}
+  {{ $pdf_id = replaceRE "^http.*/" "" $pdf_file }}
+  {{ $pdf_url = replaceRE "/blob/" "/raw/" $pdf_file }}
+  <a href="{{ $pdf_url }}"><button class="btn btn-primary">Download &raquo;{{ $pdf_id }}&laquo;</button></a>
+{{ else }}
+  {{ $pdf_id = replaceRE "[.-]" "_" $pdf_file }}
+  {{ $pdf_url =  path.Join .Page.Dir $pdf_file }}
+  {{ $pdf_url = $pdf_url | absURL }}
 <div class="pdf">
 <div class="pdf-paginator" id="paginator_{{- $pdf_id -}}">
     <button class="btn btn-primary" id="prev_{{- $pdf_id -}}">Previous</button>
@@ -131,3 +138,4 @@ pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
 })
 
 </script>
+{{ end }}
