@@ -8,7 +8,7 @@
   {{ $pdf_id = replaceRE "^http.*/" "" $pdf_file }}
   {{ $pdf_url = replaceRE "/blob/" "/raw/" $pdf_file }}
   <a href="{{ $pdf_url }}">
-    <button class="btn btn-primary" style="{{ if findRE "slides-pdf" $pdf_file }}{{ "margin_bottom: 3rem" }}{{ end }}">
+    <button class="btn btn-primary" style="{{ if findRE "slides-pdf" $pdf_file }}{{ "margin-bottom:3rem" }}{{ end }}">
       Download &raquo;{{ $pdf_id }}&laquo;
     </button>
   </a>
