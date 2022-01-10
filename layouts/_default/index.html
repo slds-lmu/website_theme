@@ -39,4 +39,17 @@
 </ul>
 </div>
 {{ end }}
+
+{{ $exercises := .Site.GetPage "section" "exercises" }}
+<!-- For debugging:
+{{ printf "%#v" $exercises.Title }}
+{{ printf "%#v" $exercises.RelPermalink }}
+-->
+{{ if $exercises.Title }}
+<div class="chapter_overview" id="index_appendix">
+<ul class="list-unstyled">
+<li><a class="title" href="{{ $exercises.RelPermalink }}">{{ $exercises.Title }}</a></li>
+</ul>
+</div>
+{{ end }}
 {{ end }}
